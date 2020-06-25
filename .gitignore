@@ -1,7 +1,10 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,redis,python,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,redis,python,macos
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,redis,python,macos,dotenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,redis,python,macos,dotenv
+
+### dotenv ###
+.env
 
 ### macOS ###
 # General
@@ -136,7 +139,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -182,8 +184,10 @@ dmypy.json
 # Ignore all local history of files
 .history
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,redis,python,macos
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,redis,python,macos,dotenv
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
 .vscode
+backend/pubsub.py
+backend/pubsub.py

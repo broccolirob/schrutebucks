@@ -1,15 +1,18 @@
 import time
+import os
 
+from dotenv import load_dotenv
 from pubnub.pubnub import PubNub
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.callbacks import SubscribeCallback
 
+load_dotenv()
 pnconfig = PNConfiguration()
-pnconfig.subscribe_key = 'sub-c-44f766d6-b710-11ea-bf7c-ae6a3e72d19d'
-pnconfig.publish_key = 'pub-c-ce0b9a4d-6e0e-4c8f-9d7d-d2102fb7a357'
+pnconfig.subscribe_key = os.getenv("SUB_KEY")
+pnconfig.publish_key = os.getenv("PUB_KEY")
 pubnub = PubNub(pnconfig)
 
-TEST_CHANNEL = 'TEST_CHANNEL'
+CHANNELS = {'TEST': 'TEST', 'BLOCK': 'BLOCK'}
 
 
 class Listener(SubscribeCallback):
@@ -26,7 +29,7 @@ class PubSub():
 
     def __init__(self):
         self.pubnub = PubNub(pnconfig)
-        self.pubnub.subscribe().channels([TEST_CHANNEL]).execute()
+        self.pubnub.subscribe().channels(CHANNELS.values()).execute()
         self.pubnub.add_listener(Listener())
 
     def publish(self, channel, message):
@@ -35,11 +38,17 @@ class PubSub():
         """
         self.pubnub.publish().channel(channel).message(message).sync()
 
+    def broadcast_block(self, block):
+        """
+        Broadcast a block object to all nodes.
+        """
+        self.publish(CHANNELS['BLOCK'], block.to_json())
+
 
 def main():
     pubsub = PubSub()
     time.sleep(1)
-    pubsub.publish(TEST_CHANNEL, {'foo': 'bar'})
+    pubsub.publish(CHANNELS['TEST'], {'foo': 'bar'})
 
 
 if __name__ == '__main__':
